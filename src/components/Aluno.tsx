@@ -1,4 +1,4 @@
-interface AlunoProps {
+interface AlunoProps { //definindo as propriedades que aluno vai receber
     nome: string
     idade: number
     }
