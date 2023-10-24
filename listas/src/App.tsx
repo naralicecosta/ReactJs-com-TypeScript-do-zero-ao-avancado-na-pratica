@@ -1,4 +1,4 @@
-import{ useState } from 'react';
+import{ useState, useEffect } from 'react';
 
 export default function App() {
   const [input, setInput] = useState("");
@@ -7,6 +7,11 @@ export default function App() {
     enabled: false,
     task: ''
   })
+
+  useEffect(() => {
+    
+
+  },[])
 
 
   function handleRegister(){
