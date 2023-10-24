@@ -8,6 +8,12 @@ export default function App() {
     'estudar ingles'
   ])
   function handleRegister(){
+    if(!input){
+      alert("Preencha o nome da sua tarefs!")
+      return
+    }
+    setTasks(tarefas => [...tarefas, input])
+    setInput("") {/**para voltar o input ao status vazio */}
     
   }
 
@@ -26,6 +32,7 @@ export default function App() {
       {tasks.map((item, index) => (
         <section key={item}> {/*as keys sao utilizadas para encontrar dentro das listas e ter mais performance */}
           <span>{item}</span>
+          <button>excluir</button>
         </section>
       ))}  {/**map é uma função em js usada para percorrer uma lista */}
     </div>
