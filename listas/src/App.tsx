@@ -2,6 +2,9 @@ import{ useState, useEffect, useRef } from 'react';
 
 export default function App() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const firstRender = useRef(true)
+
+
   const [input, setInput] = useState("");
   const [tasks, setTasks] = useState<string[]>([]); {/**<string[]>/ esta fazendo uma tipagem, dizendo que tasks vai ser uma string */}
   const [editTask, setEditTask] = useState({
@@ -18,11 +21,17 @@ export default function App() {
       }
 
     },[])
+
   
     // executa as tarfas
   useEffect(()=>{
+    if(firstRender.current){
+      firstRender.current = false;
+      return;
+    }
     // executar quando a usestate task mudar
     localStorage.setItem("@cursoreact", JSON.stringify(tasks)) 
+    console.log("useffect foi chamado")
 
   },[tasks])
 
