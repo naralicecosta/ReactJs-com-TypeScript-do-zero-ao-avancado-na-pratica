@@ -1,4 +1,5 @@
 import{ useState, useEffect } from 'react';
+import { json } from 'stream/consumers';
 
 export default function App() {
   const [input, setInput] = useState("");
@@ -25,6 +26,7 @@ export default function App() {
     }
     setTasks(tarefas => [...tarefas, input])
     setInput(""); { /*para voltar o input ao status vazio */}
+    localStorage.setItem("@cursoreact", JSON.stringify([...tasks, input])); {/** ao salvar uma nova tarefa ela fica salva em local storage */}
     
   }
   function handleSaveEdit(){
@@ -40,10 +42,13 @@ export default function App() {
     })
 
     setInput("");{/*limpar o campo */}
+    localStorage.setItem("@cursoreact", JSON.stringify(allTasks)), {/**salvando uma tarefa editada no local storage */}
   }
   function handleDelete(item: string){
     const removeTask = tasks.filter(task => task !== item); {/**o filter vai percorrer a lista e cm base na condição ele devolve algo */}
     setTasks(removeTask)
+
+    localStorage.setItem("@cursoreact", JSON.stringify(removeTask)) 
   }
   function handleEdit(item: string){
     {/**ao clicar em editar o conteudo vai voltar ao input para ser editado */}
