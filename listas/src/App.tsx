@@ -1,4 +1,4 @@
-import{ useState, useEffect, useRef } from 'react';
+import{ useState, useEffect, useRef, useMemo } from 'react';
 
 export default function App() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -81,6 +81,10 @@ export default function App() {
     })
   }
 
+  const totalTarefas = useMemo(() =>{
+    return tasks.length
+  },[tasks])
+
   return(
     <div>
       <h1>Lista de tarefas</h1>
@@ -95,6 +99,8 @@ export default function App() {
         {editTask.enabled ? "Atualizar tarefa" : "Adicionar tarefa" } {/*quando clicar em editar o botao de adicionar tarefa muda para atualizar tarfa */}
        </button>
       <hr/>
+      <strong>Voce tem {totalTarefas} tarefas</strong>
+      <br /><br />
 
       {tasks.map((item, index) => (
         <section key={item}> {/*as keys sao utilizadas para encontrar dentro das listas e ter mais performance */}
