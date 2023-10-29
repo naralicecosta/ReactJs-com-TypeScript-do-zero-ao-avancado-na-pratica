@@ -1,8 +1,8 @@
-import{ useState, useEffect, useRef, useMemo } from 'react';
+import{ useState, useEffect, useRef, useMemo, useCallback } from 'react';
 
 export default function App() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const firstRender = useRef(true)
+  const firstRender = useRef(true) //para termos referencia de algum elemento
 
 
   const [input, setInput] = useState("");
@@ -12,7 +12,7 @@ export default function App() {
     task: ''
   })
 
-  //busca as tarefas
+  //busca as tarefas no local storage para ter acesso as listas
   useEffect(() => {
      const tarefaSalvas = localStorage.getItem("@cursoreact") // vai no local storage, busca as tarefas salvas
       
@@ -35,10 +35,11 @@ export default function App() {
 
   },[tasks])
 
-  function handleRegister(){
+
+  const handleRegister = useCallback(()=>{
     if(!input){
       alert("Preencha o nome da sua tarefs!")
-      return
+      return;
     }
     if(editTask.enabled){
       handleSaveEdit();
@@ -47,8 +48,10 @@ export default function App() {
     setTasks(tarefas => [...tarefas, input])
     setInput(""); { /*para voltar o input ao status vazio */}
     //localStorage.setItem("@cursoreact", JSON.stringify([...tasks, input])); {/** ao salvar uma nova tarefa ela fica salva em local storage */}
+
+  },[input, tasks]) // quando o input sofrer alteração tasks sofra alteração
+
     
-  }
   function handleSaveEdit(){
     const findIndexTask = tasks.findIndex(task => task === editTask.task) ; {/**findIndex/ vai achar a posição do item */}
     const allTasks = [...tasks];
@@ -81,7 +84,8 @@ export default function App() {
     })
   }
 
-  const totalTarefas = useMemo(() =>{
+  // evitar renderizações desnecessárias
+  const totalTarefas = useMemo(() =>{ //para termos algo memorizado em cash
     return tasks.length
   },[tasks])
 
